@@ -16,7 +16,7 @@ SKYFALL helps you to analyze bottleneck ground-satellite links (GSLs) and how to
 ## Preparation
 
 1. A high-performing server with multiple cores per processor. For example, we run the experiments on a DELL R740 server with two Intel Xeon 5222 Processors (64 logical processors in total) and 8*32G DDR4 RAM. If only a commodity desktop machine is available (e.g., an x86-64 CPU with 8 cores and 16 GB of RAM), you are still able to run a small demo as shown below.
-2. Support for CentOS 7.9.2009, Python 3.6 or above, and Ubuntu 20.04 LTS (and 18.04).
+2. Support for Python 3.6 or above, CentOS 7.9.2009 or Ubuntu 18.04 or above.
 
 
 ## Installation
@@ -141,7 +141,7 @@ If running such a reproduction is a burden, all the reproduced data is already a
 Running the above seven steps allows you to get the reproduced results in `starlink_shell_one/results`. 
 
 ### Better Performance of SKYFALL’ Distributed Botnet
-SKYFALL is able to exploit the time-varying bottleneck and achieve good flooding attack performances. We compare it with a baselines, where both are given the same number of bot terminals. We then compare the throughput (ratio) of affected background traffic and number of affected GSLs over time. The results are shown in Figure 9. Under `starlink_shell_one/results/`, `fig-9a`, `fig-9a`, and `fig-9a` contain the corresponding throughput (ratio) data for each timeslot. `fig-10a` contains the number of attacked GSLs for each timeslot, while `fig-10b` documents the maximum, minimum, and average numbers.
+SKYFALL is able to exploit the time-varying bottleneck and achieve good flooding attack performances. We compare it with a baseline, where both are given the same number of bot terminals. We then compare the throughput (ratio) of affected background traffic and number of affected GSLs over time. The results are shown in Figure 9. Under `starlink_shell_one/results/`, `fig-9a`, `fig-9a`, and `fig-9a` contain the corresponding throughput (ratio) data for each timeslot. `fig-10a` contains the number of attacked GSLs for each timeslot, while `fig-10b` documents the maximum, minimum, and average numbers.
 
 ### Cost Analysis
 To achieve the same throughput degradation as the baseline approach, SKYFALL is able to leverage a smaller number of malicious terminals (botnet size) for both +Grid and Circular topologies. The results are shown in Figure 12. `fig-12a`, and `fig-12b` under `starlink_shell_one/results/` contain the number of malicious terminals under various degradations for both topologies respectively.
