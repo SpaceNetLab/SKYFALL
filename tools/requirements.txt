@@ -1,0 +1,9 @@
+setuptools 
+xlrd 
+argparse 
+numpy 
+requests 
+skyfield 
+sgp4 
+heapq
+collections
