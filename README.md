@@ -149,3 +149,6 @@ To achieve the same throughput degradation as the baseline approach, SKYFALL is 
 ### Detectability Analysis
 During SKYFALL's attack, the total malicious traffic of each satellite from all accessed malicious terminals is small. It quantifies the detectability of SKYFALL. The results are shown in Figure 14. Only a small number of satellites are accessed with malicious traffic. Under `starlink_shell_one/results/`, `fig-14a`,and `fig-14b` contain the throughput data of maliciousc traffic for each satellite in ascending order under various throughput
 degradations.
+
+## Customization
+In addition to the Starlink shell one configuration run in our experiments, the other constellations with various numbers of orbits and per-orbit satellites could also be configured to run all the experiments again. You may change the parameters in `config.json`. The results may vary, but the overall performance still holds. The length of the attack period could also be customized.
