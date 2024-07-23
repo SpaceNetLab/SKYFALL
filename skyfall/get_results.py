@@ -157,7 +157,7 @@ if __name__ == "__main__":
             with open(skyfall_botnum_file_path, 'r') as file:
                 values = [float(line.strip()) for line in file]
                 botnet_size_for_skyfall.append(values[0])
-                malign_traffic_for_skyfall.append(values[0] * 20 / 1024)
+                malign_traffic_for_skyfall.append(values[0] * unit_traffic / 1024)
         # icarus bot_num 
         icarus_bot_size = []
         for subdir in os.listdir(icarus_folder_path):
@@ -171,7 +171,7 @@ if __name__ == "__main__":
                             icarus_bot_size.append(values[0] * 3.8)
         botnet_size_for_icarus.append(int(sum(icarus_bot_size) / len(icarus_bot_size)))
         # botnet_size_for_icarus.append(min(icarus_bot_size))
-        malign_traffic_for_icarus.append(botnet_size_for_icarus[-1] * 20 / 1024)
+        malign_traffic_for_icarus.append(botnet_size_for_icarus[-1] * unit_traffic / 1024)
     output_file = '../' + cons_name + '/results' + '/fig-12a/botnet_size_for_skyfall.txt'
     with open(output_file, 'w') as file:
         for i in range (len(ratios)):
