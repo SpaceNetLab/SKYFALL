@@ -4,6 +4,4 @@ argparse
 numpy 
 requests 
 skyfield 
-sgp4 
-heapq
-collections
+sgp4

@@ -65,7 +65,7 @@ if __name__ == "__main__":
                str(traffic_thre) + "-" + str(sat_per_cycle) + "-" +
                str(GSL_capacity) + "-" + str(unit_traffic) + '/' + time_slot +
                '/attack_gsl.txt')
-    gsl_num = (len(GSL_attack) - 48) if (GSL_attack != [] and len(GSL_attack) > 48) else 0
+    gsl_num = (len(GSL_attack) - 48) if (GSL_attack.size != 0 and len(GSL_attack) > 48) else 0
 
     gsl_list_candidate = random.sample(range(0, sat_per_cycle * orbit_num), sat_per_cycle * orbit_num - 1)
     gsl_list = []

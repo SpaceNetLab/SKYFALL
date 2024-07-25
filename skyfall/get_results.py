@@ -7,6 +7,7 @@ import json
 import sys
 import os
 from collections import Counter
+import matplotlib.pyplot as plt
 
 f = open("../config.json", "r", encoding='utf8')
 table = json.load(f)
@@ -298,5 +299,346 @@ if __name__ == "__main__":
             with open(output_file, 'w') as file:
                 for value in downlink_traffic:
                     file.write(str(value) + '\n')
+                    
+    # plot fig-9a
+    y1 = np.loadtxt('../' + cons_name + '/results' + '/fig-9a/ratio_of_affected_background_traffic_by_skyfall.txt') 
+    y2 = np.loadtxt('../' + cons_name + '/results' + '/fig-9a/ratio_of_attacked_GSLs_by_skyfall.txt') 
+    x1 = np.arange(len(y1))
+    x2 = np.arange(len(y2))
 
+    plt.plot(x1, y1, label='Ratio of affected background traffic by SKYFALL') 
+    plt.plot(x2, y2, label='Ratio of attacked GSLs by SKYFALL')
+
+    plt.title("Attack performance on Starlink by SKYFALL")
+    plt.xlabel("Time slot (s)")
+    plt.ylabel("Ratio")
+    plt.ylim([0, 0.6])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-9a/fig-9a.png') 
+    plt.close()
+            
+    # plot fig-9b
+    y1 = np.loadtxt('../' + cons_name + '/results' + '/fig-9b/ratio_of_affected_background_traffic_by_icarus.txt') 
+    y2 = np.loadtxt('../' + cons_name + '/results' + '/fig-9b/ratio_of_attacked_GSLs_by_icarus.txt') 
+    x1 = np.arange(len(y1))
+    x2 = np.arange(len(y2))
+
+    plt.plot(x1, y1, label='Ratio of affected background traffic by ICARUS') 
+    plt.plot(x2, y2, label='Ratio of attacked GSLs by ICARUS')
+
+    plt.title("Attack performance on Starlink by ICARUS")
+    plt.xlabel("Time slot (s)")
+    plt.ylabel("Ratio")
+    plt.ylim([0, 0.1])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-9b/fig-9b.png') 
+    plt.close()
+
+    # plot fig-9c
+    y1 = np.loadtxt('../' + cons_name + '/results' + '/fig-9c/background_traffic_without_attack.txt') 
+    y2 = np.loadtxt('../' + cons_name + '/results' + '/fig-9c/affected_background_traffic_by_skyfall.txt')
+    y3 = np.loadtxt('../' + cons_name + '/results' + '/fig-9c/affected_background_traffic_by_icarus.txt') 
+    x1 = np.arange(len(y1))
+    x2 = np.arange(len(y2))
+    x3 = np.arange(len(y3))
+
+    plt.plot(x1, y1, label='Background traffic without attack') 
+    plt.plot(x2, y2, label='Affected background traffic by SKYFALL')
+    plt.plot(x3, y3, label='Affected background traffic by ICARUS')
+
+    plt.title("Throughput change on Starlink by SKYFALL and ICARUS")
+    plt.xlabel("Time slot (s)")
+    plt.ylabel("Throughput (Gbps)")
+    plt.ylim([0, 1000])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-9c/fig-9c.png') 
+    plt.close()
+
+    # plot fig-10a
+    x1 = np.loadtxt('../' + cons_name + '/results' + '/fig-10a/number_attacked_GSLs_starlink_cdf.txt') 
+    y1 = np.arange(0, 1, 1/len(x1))
+
+    plt.plot(x1, y1, label='Starlink') 
+
+    plt.title("CDF of the number of attacked GSLs by SKYFALL")
+    plt.xlabel("Number of attacked GSLs")
+    plt.ylabel("CDF")
+    plt.ylim([0, 1])
+    plt.xlim([10, 70])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-10a/fig-10a.png') 
+    plt.close()
+
+    # plot fig-10b
+    with open('../' + cons_name + '/results' + '/fig-10b/number_attacked_GSLs_starlink_box.txt', 'r') as file:  
+        lines = file.readlines()
+        min_value = float(lines[0].split(':')[1].strip())  
+        max_value = float(lines[1].split(':')[1].strip()) 
+        average = float(lines[2].split(':')[1].strip())
+    error = [[average - min_value], 
+            [max_value - average]] 
+
+    plt.errorbar(x=0, y=average, yerr=error, fmt='s', markersize=10)
+    plt.xlim(-1, 1)
+    plt.xticks([])
+    plt.ylim([0, 60])
+
+    plt.title('Box-plot of the number of attacked GSLs by SKYFALL')
+    plt.ylabel('Number of attacked GSLs')
+    plt.xlabel('Starlink')
+    plt.savefig('../' + cons_name + '/results' + '/fig-10b/fig-10b.png')
+    plt.close()
+
+    # plot fig-12a
+    with open('../' + cons_name + '/results' + '/fig-12a/botnet_size_for_skyfall.txt', 'r') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values1 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+
+    with open('../' + cons_name + '/results' + '/fig-12a/botnet_size_for_icarus.txt', 'r') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values2 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
     
+    labels = ['10', '20', '30', '40', '50']
+    width = 0.35  
+    labels_location = np.arange(len(labels)) 
+
+    rects1 = plt.bar(labels_location - width/2, values1, width, label='Skyfall') 
+    rects2 = plt.bar(labels_location + width/2, values2, width, label='Icarus')
+    plt.ylim([0, 4000])
+    plt.title('Botnet size and botnet traffic under various degradations for +Grid.')
+    plt.ylabel('Botnet size')
+    plt.xlabel('Throughput degradation (%)')
+    plt.xticks(labels_location, labels)
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-12a/fig-12a-1.png')
+    plt.close()
+    
+    y1 = []
+    with open('../' + cons_name + '/results' + '/fig-12a/malign_traffic_for_skyfall.txt', 'r') as file:  
+        lines = file.readlines()
+        y1.append(float(lines[0].split(':')[1].strip()))
+        y1.append(float(lines[1].split(':')[1].strip()))
+        y1.append(float(lines[2].split(':')[1].strip()))
+        y1.append(float(lines[3].split(':')[1].strip()))
+        y1.append(float(lines[4].split(':')[1].strip()))
+    y2 = []
+    with open('../' + cons_name + '/results' + '/fig-12a/malign_traffic_for_icarus.txt', 'r') as file:  
+        lines = file.readlines()
+        y2.append(float(lines[0].split(':')[1].strip()))
+        y2.append(float(lines[1].split(':')[1].strip()))
+        y2.append(float(lines[2].split(':')[1].strip()))
+        y2.append(float(lines[3].split(':')[1].strip()))
+        y2.append(float(lines[4].split(':')[1].strip()))
+    x1 = np.arange(10, 60, 10)
+    x2 = np.arange(10, 60, 10)
+
+    plt.plot(x1, y1, label='Malign traffic for SKYFALL') 
+    plt.plot(x2, y2, label='Malign traffic for ICARUS')
+
+    plt.title("Botnet size and botnet traffic under various degradations for +Grid.")
+    plt.xlabel('Throughput degradation (%)')
+    plt.ylabel("Malign traffic (Gbps)")
+    plt.ylim([0, 80])
+    plt.xticks([10, 20, 30, 40, 50])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-12a/fig-12a-2.png') 
+    plt.close()
+    
+    
+    # plot fig-12b
+    with open('../' + cons_name + '/results' + '/fig-12b/botnet_size_for_skyfall.txt', 'r') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values1 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+
+    with open('../' + cons_name + '/results' + '/fig-12b/botnet_size_for_icarus.txt', 'r') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values2 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+    
+    labels = ['10', '20', '30', '40', '50']
+    width = 0.35  
+    labels_location = np.arange(len(labels)) 
+
+    rects1 = plt.bar(labels_location - width/2, values1, width, label='Skyfall') 
+    rects2 = plt.bar(labels_location + width/2, values2, width, label='Icarus')
+    plt.ylim([0, 4000])
+    plt.title('Botnet size and botnet traffic under various degradations for +Grid.')
+    plt.ylabel('Botnet size')
+    plt.xlabel('Throughput degradation (%)')
+    plt.xticks(labels_location, labels)
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-12b/fig-12b-1.png')
+    plt.close()
+
+    y1 = []
+    with open('../' + cons_name + '/results' + '/fig-12b/malign_traffic_for_skyfall.txt', 'r') as file:  
+        lines = file.readlines()
+        y1.append(float(lines[0].split(':')[1].strip()))
+        y1.append(float(lines[1].split(':')[1].strip()))
+        y1.append(float(lines[2].split(':')[1].strip()))
+        y1.append(float(lines[3].split(':')[1].strip()))
+        y1.append(float(lines[4].split(':')[1].strip()))
+    y2 = []
+    with open('../' + cons_name + '/results' + '/fig-12b/malign_traffic_for_icarus.txt', 'r') as file:  
+        lines = file.readlines()
+        y2.append(float(lines[0].split(':')[1].strip()))
+        y2.append(float(lines[1].split(':')[1].strip()))
+        y2.append(float(lines[2].split(':')[1].strip()))
+        y2.append(float(lines[3].split(':')[1].strip()))
+        y2.append(float(lines[4].split(':')[1].strip()))
+    x1 = np.arange(10, 60, 10)
+    x2 = np.arange(10, 60, 10)
+
+    plt.plot(x1, y1, label='Malign traffic for SKYFALL') 
+    plt.plot(x2, y2, label='Malign traffic for ICARUS')
+
+    plt.title("Botnet size and botnet traffic under various degradations for +Grid.")
+    plt.xlabel('Throughput degradation (%)')
+    plt.ylabel("Malign traffic (Gbps)")
+    plt.ylim([0, 80])
+    plt.xticks([10, 20, 30, 40, 50])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-12b/fig-12b-2.png') 
+    plt.close()
+    
+    # plot fig-13
+    with open('../' + cons_name + '/results' + '/fig-13/number_blocks_skyfall_' + topologies[1] + '.txt') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values1 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+    
+    with open('../' + cons_name + '/results' + '/fig-13/number_blocks_icarus_' + topologies[1] + '.txt') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values2 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+    
+    with open('../' + cons_name + '/results' + '/fig-13/number_blocks_skyfall_' + topologies[0] + '.txt') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values3 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+    
+    with open('../' + cons_name + '/results' + '/fig-13/number_blocks_icarus_' + topologies[0] + '.txt') as file:  
+        lines = file.readlines()
+        degradation_10 = float(lines[0].split(':')[1].strip())  
+        degradation_20 = float(lines[1].split(':')[1].strip()) 
+        degradation_30 = float(lines[2].split(':')[1].strip())
+        degradation_40 = float(lines[3].split(':')[1].strip())  
+        degradation_50 = float(lines[4].split(':')[1].strip()) 
+    values4 = [degradation_10, degradation_20, degradation_30, degradation_40, degradation_50]
+    
+    labels = ['10', '20', '30', '40', '50']
+    width = 0.2 
+    labels_location = np.arange(len(labels))
+
+    rects1 = plt.bar(labels_location - 3/2*width, values1, width, label='SKYFALL under Circular')
+    rects2 = plt.bar(labels_location - 1/2*width, values2, width, label='Icarus under Circular')
+    rects3 = plt.bar(labels_location + 1/2*width, values3, width, label='SKYFALL under +Grid')
+    rects4 = plt.bar(labels_location + 3/2*width, values4, width, label='Icarus under +Grid')
+
+    plt.ylim([0, 600])
+    plt.title('Number of blocks for the botnet distribution.')
+    plt.ylabel('Number of blocks for bots')
+    plt.xlabel('Throughput degradation (%)')
+    plt.xticks(labels_location, labels)
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-13/fig-13.png')
+    plt.close()
+
+    # plot fig-14a
+    x1 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/background_traffic.txt') 
+    x2 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/malicious_uplink_throughput_degradation_10_percent.txt') 
+    x3 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/malicious_uplink_throughput_degradation_20_percent.txt') 
+    x4 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/malicious_uplink_throughput_degradation_30_percent.txt') 
+    x5 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/malicious_uplink_throughput_degradation_40_percent.txt') 
+    x6 = np.loadtxt('../' + cons_name + '/results' + '/fig-14a/malicious_uplink_throughput_degradation_50_percent.txt') 
+    y1 = np.arange(0, 1, 1/len(x1))
+    y2 = np.arange(0, 1, 1/len(x2))
+    y3 = np.arange(0, 1, 1/len(x3))
+    y4 = np.arange(0, 1, 1/len(x4))
+    y5 = np.arange(0, 1, 1/len(x5))
+    y6 = np.arange(0, 1, 1/len(x6))
+
+    plt.plot(x1, y1, label='Background Traffic') 
+    plt.plot(x2, y2, label='Throughput degradation=10%')
+    plt.plot(x3, y3, label='Throughput degradation=20%')
+    plt.plot(x4, y4, label='Throughput degradation=30%')
+    plt.plot(x5, y5, label='Throughput degradation=40%')
+    plt.plot(x6, y6, label='Throughput degradation=50%')
+
+    plt.title("Detectability under the +Grid Topology")
+    plt.xlabel("Malicious uplink throughput of a satellite (Mbps)")
+    plt.ylabel("CDF")
+    plt.ylim([0.9, 1])
+    plt.xlim([0, 4000])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-14a/fig-14a.png') 
+    plt.close()
+
+    # plot fig-14b
+    x1 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/background_traffic.txt') 
+    x2 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/malicious_uplink_throughput_degradation_10_percent.txt') 
+    x3 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/malicious_uplink_throughput_degradation_20_percent.txt') 
+    x4 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/malicious_uplink_throughput_degradation_30_percent.txt') 
+    x5 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/malicious_uplink_throughput_degradation_40_percent.txt') 
+    x6 = np.loadtxt('../' + cons_name + '/results' + '/fig-14b/malicious_uplink_throughput_degradation_50_percent.txt') 
+    y1 = np.arange(0, 1, 1/len(x1))
+    y2 = np.arange(0, 1, 1/len(x2))
+    y3 = np.arange(0, 1, 1/len(x3))
+    y4 = np.arange(0, 1, 1/len(x4))
+    y5 = np.arange(0, 1, 1/len(x5))
+    y6 = np.arange(0, 1, 1/len(x6))
+
+    plt.plot(x1, y1, label='Background Traffic') 
+    plt.plot(x2, y2, label='Throughput degradation=10%')
+    plt.plot(x3, y3, label='Throughput degradation=20%')
+    plt.plot(x4, y4, label='Throughput degradation=30%')
+    plt.plot(x5, y5, label='Throughput degradation=40%')
+    plt.plot(x6, y6, label='Throughput degradation=50%')
+
+    plt.title("Detectability under the +Grid Topology")
+    plt.xlabel("Malicious uplink throughput of a satellite (Mbps)")
+    plt.ylabel("CDF")
+    plt.ylim([0.9, 1])
+    plt.xlim([0, 4000])
+
+    plt.legend()
+    plt.savefig('../' + cons_name + '/results' + '/fig-14b/fig-14b.png') 
+    plt.close()

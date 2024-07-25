@@ -62,7 +62,7 @@ Run `bash ./install.sh` to install python packets like `python3 -m pip install s
    bash aggregated_deployment.sh 3600 0.5
    ```
 
-7. Get results (integrating the above results to obtain the results for the paper):
+7. Get results (integrating the above results to obtain the results and figures for the paper):
    ```
    bash get_results.sh
    ```
@@ -83,7 +83,7 @@ After running step 5, timeslot analysis results (malicious terminal number, bloc
 
 After running step 6, aggregated deployment results (malicious terminal number, blocks to deploy the malicious terminals, affected traffic, and so on) will be generated in each folder of `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot` and `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot`.
 
-After running step 7, reproduced results will be in `starlink_shell_one/results`.
+After running step 7, reproduced results and figures will be in `starlink_shell_one/results`.
 
 If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-3600-backup`](https://drive.google.com/file/d/1VauMH0Dm6CLrvr9cGfB6mLm6YlLt9QQf/view?usp=sharing).
 
@@ -130,7 +130,7 @@ To run the demo, everything else could be kept the same except the parameter of 
    bash aggregated_deployment.sh 100 0.5
    ```
 
-7. Get results (integrating the above results to obtain the results for the paper):
+7. Get results (integrating the above results to obtain the results and figures for the paper):
    ```
    bash get_results.sh
    ```
@@ -138,7 +138,7 @@ To run the demo, everything else could be kept the same except the parameter of 
 If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-100-backup`](https://drive.google.com/file/d/1py1jELENHA4I_RcOwxnMk4lYSNEdhu92/view?usp=sharing).
 
 ## Results
-Running the above seven steps allows you to get the reproduced results in `starlink_shell_one/results`. 
+Running the above seven steps allows you to get the reproduced results and figures in `starlink_shell_one/results`. 
 
 ### Better Performance of SKYFALL’ Distributed Botnet
 SKYFALL is able to exploit the time-varying bottleneck and achieve good flooding attack performances. We compare it with a baseline, where both are given the same number of bot terminals. We then compare the throughput (ratio) of affected background traffic and number of affected GSLs over time. The results are shown in Figure 9. Under `starlink_shell_one/results/`, `fig-9a`, `fig-9b`, and `fig-9c` contain the corresponding throughput (ratio) data for each timeslot. `fig-10a` contains the number of attacked GSLs for each timeslot, while `fig-10b` documents the maximum, minimum, and average numbers.
