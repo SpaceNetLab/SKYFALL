@@ -1,6 +1,6 @@
 # SKYFALL
 
-SKYFALL for Low-earth orbit (LEO) satellite networks (LSNs).
+SKYFALL for Low-earth orbit (LEO) satellite networks (LSNs). This repository contains code for the paper: "Time-varying Bottleneck Links in LEO Satellite Networks: Identification, Exploits, and Countermeasures", to appear at the 32nd Network and Distributed System Security Symposium (NDSS 2025).
 
 ## What is SKYFALL?
 
