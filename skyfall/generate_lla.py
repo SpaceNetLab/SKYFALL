@@ -1,3 +1,6 @@
+# In this code, latitude, longitude and altitude of each satellite is generated for each time slot
+# as described in the experimental setting (Section V.A)
+
 from skyfield.api import load, wgs84, EarthSatellite
 from datetime import datetime
 from sgp4.api import Satrec, WGS84

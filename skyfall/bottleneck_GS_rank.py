@@ -1,3 +1,6 @@
+# In this code, the vital GSes are ranked based on the three metrics from the paper ()
+# as described in the Analysis Stage (Section IV.C)
+
 import json
 import heapq
 import sys

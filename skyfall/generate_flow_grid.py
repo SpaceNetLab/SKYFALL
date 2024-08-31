@@ -1,11 +1,13 @@
+# At a specific moment, analyze the traffic throughput of each link (ISLs and GSLs) under the network topology and traffic conditions.
+# Network Topology: User blocks connect to a satellite, and satellites forms +Grid.
+# Traffic: Based on the Starlink traffic of each block from CloudFlare, flows probabilistically increasing by 0.5M each sampling time (ISL capacity 20Gbps; GSL Uplink/Downlink: 4Gbps).
+# as described in the experimental setting (Section V.A)
+
 import math
 import sys
 import numpy as np
 import random, json
 import os
-# At a specific moment, analyze the traffic throughput of each link (ISLs and GSLs) under the network topology and traffic conditions.
-# Network Topology: User blocks connect to a satellite, and satellites forms +Grid.
-# Traffic: Based on the Starlink traffic of each block from CloudFlare, flows probabilistically increasing by 0.5M each sampling time (ISL capacity 20Gbps; GSL Uplink/Downlink: 4Gbps).
 
 # Constants
 RADIUS = 6371

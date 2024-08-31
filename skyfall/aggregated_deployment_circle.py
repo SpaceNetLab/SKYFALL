@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+# In this code, we assume the malicious terminals are positioned in certain regions
+# as described in Section IV.A
+
 import numpy as np
 import math
 import json

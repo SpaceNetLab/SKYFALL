@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 
+# In this code, we analyze the risks and the variabilities, as described in the Analysis Stage (Section IV.C)
+# Specifically, the worst case under the Circular Structure is analyzed in this code.
+
 import numpy as np
 import math
 import os
