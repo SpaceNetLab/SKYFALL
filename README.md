@@ -1,17 +1,17 @@
 # SKYFALL
 
-SKYFALL for Low-earth orbit (LEO) satellite networks (LSNs). This repository contains code for paper #109: "Time-varying Bottleneck Links in LEO Satellite Networks: Identification, Exploits, and Countermeasures", to appear at the 32nd Network and Distributed System Security Symposium (NDSS 2025). The DOI is 10.5281/zenodo.13723143. The target URL is https://zenodo.org/doi/10.5281/zenodo.13723142.
+SKYFALL for Low-earth orbit (LEO) satellite networks (LSNs). This repository contains code for paper "Time-varying Bottleneck Links in LEO Satellite Networks: Identification, Exploits, and Countermeasures", to appear at the 32nd Network and Distributed System Security Symposium (NDSS 2025).
 
 ## What is SKYFALL?
 
-SKYFALL helps you to analyze bottleneck ground-satellite links (GSLs) and how to deploy malicious terminals (where and how many) to accordingly achieve link-flooding attacks of various throughput degradations.
+SKYFALL helps you analyze bottleneck ground-satellite links (GSLs) and the possible consequences of being congested.
 
 ## What are the components?
 
 1. A configuration file (`config.json`).
 2. A code directory (`skyfall`).
 3. Bash scripts to run the experiments (`*.sh`).
-4. Links of reproduced data, satellite geo-information, and network data ([`starlink_shell_one-3600-backup`](https://drive.google.com/file/d/1VauMH0Dm6CLrvr9cGfB6mLm6YlLt9QQf/view?usp=sharing) and [`starlink_shell_one-100-backup`](https://drive.google.com/file/d/1py1jELENHA4I_RcOwxnMk4lYSNEdhu92/view?usp=sharing)). The storage for the datasets are 3.3GB and 95MB respectively.
+4. Links of reproduced data, satellite geo-information, and network data ([`starlink_shell_one-3600-backup`](https://drive.google.com/file/d/1rTuCinLNDnB9q8lyPyZgIaXxpHscX5my/view?usp=drive_link) and [`starlink_shell_one-100-backup`](https://drive.google.com/file/d/1eNZg-OF8xsjjjJNGbJ_8kE_j0x-MtSFR/view?usp=drive_link)). The storage for the datasets are 3.3GB and 104MB respectively.
 
 ## Preparation
 
@@ -44,9 +44,8 @@ Or if you have a virtual environment like Conda, you can simply run `bash ./inst
    bash find_vital_GS.sh 3600 64
    ```
 
-5. Time-Slot Analysis (as shown in Section 5.1. You should specify the number of timeslots, the number of available logical processors for multi-thread, and throughput degradation, e.g., 3600, 64, and 0.9). Throughput degradation could be 1, 0.9, 0.8, 0.7, 0.6, and 0.5 as shown in Section 6. Thus, run the following commands sequentially to analyze the deployment for various degradations: (three hours taken with our hardware, half an hour for each command below)
+5. Time-Slot Analysis (as shown in Section 5.1. You should specify the number of timeslots, the number of available logical processors for multi-thread, and throughput degradation, e.g., 3600, 64, and 0.9). Throughput degradation could be 0.9, 0.8, 0.7, 0.6, and 0.5 as shown in Section 6. Thus, run the following commands sequentially to analyze the deployment for various degradations:
    ```
-   bash time_slot_analysis.sh 3600 64 1
    bash time_slot_analysis.sh 3600 64 0.9
    bash time_slot_analysis.sh 3600 64 0.8
    bash time_slot_analysis.sh 3600 64 0.7
@@ -54,9 +53,8 @@ Or if you have a virtual environment like Conda, you can simply run `bash ./inst
    bash time_slot_analysis.sh 3600 64 0.5
    ```
 
-6. Aggregated_deployment (as shown in Section 5.2. You should specify the number of timeslots and throughput degradation, e.g., 3600 and 0.9). Throughput degradation could be like 1, 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to Aggregate the deployment for various degradations: (one minute taken with our hardware)
+6. Aggregated_deployment (as shown in Section 5.2. You should specify the number of timeslots and throughput degradation, e.g., 3600 and 0.9). Throughput degradation could be like 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to Aggregate the deployment for various degradations:
    ```
-   bash aggregated_deployment.sh 3600 1
    bash aggregated_deployment.sh 3600 0.9
    bash aggregated_deployment.sh 3600 0.8
    bash aggregated_deployment.sh 3600 0.7
@@ -76,19 +74,17 @@ Follow all the seven steps and their shell commands above. **It is better to use
 
 After running step 2, a folder named `starlink_shell_one/sat_lla` will be in your current directory. It contains the satellite position information. This step is related to the experimental setting described in Section V.A of the paper.
 
-
 After running step 3, folders named `starlink_shell_one/+grid_traffic/link_traffic_data` and `starlink_shell_one/circle_traffic/link_traffic_data` contain the GSL and ISL legal traffic information, as well as satellite, ground station (GS), and blcok connection information. This step is also related to the experimental setting described in Section V.A of the paper.
 
-After running step 4, vital GSes will be generated in each timeslot folder of `starlink_shell_one/+grid_traffic/link_traffic_data` and `starlink_shell_one/circle_traffic/link_traffic_data`. Step four relates to the Analysis Stage (Section IV.C) of the paper.
+After running step 4, vital GSes will be generated in each timeslot folder of `starlink_shell_one/+grid_traffic/link_traffic_data` and `starlink_shell_one/circle_traffic/link_traffic_data`. Step four relates to the Analysis Methodology (Section IV.C) of the paper.
 
-After running step 5, timeslot analysis results (malicious terminal number, blocks to deploy the malicious terminals, affected traffic and so on) will be generated in each timeslot folder of `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot` and `starlink_shell_one/circle_traffic/attack_traffic_data_land_only_bot`. Step five also relates to the Analysis Stage (Section IV.C) of the paper.
+After running step 5, timeslot analysis results (malicious terminal number, blocks to deploy the malicious terminals, affected traffic and so on) will be generated in each timeslot folder of `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot` and `starlink_shell_one/circle_traffic/attack_traffic_data_land_only_bot`. Step five also relates to the Analysis Methodology (Section IV.C) of the paper.
 
-After running step 6, aggregated deployment results (malicious terminal number, blocks to deploy the malicious terminals, affected traffic, and so on) will be generated in each folder of `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot` and `starlink_shell_one/circle_traffic/attack_traffic_data_land_only_bot`.  Step six also relates to the Analysis Stage (Section IV.C) of the paper.
+After running step 6, aggregated deployment results (malicious terminal number, blocks to deploy the malicious terminals, affected traffic, and so on) will be generated in each folder of `starlink_shell_one/+grid_traffic/attack_traffic_data_land_only_bot` and `starlink_shell_one/circle_traffic/attack_traffic_data_land_only_bot`.  Step six also relates to the Analysis Methodology (Section IV.C) of the paper.
 
+After running step 7, reproduced results will be in `starlink_shell_one/results`.
 
-After running step 7, reproduced results and figures will be in `starlink_shell_one/results`.
-
-If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-3600-backup`](https://drive.google.com/file/d/1VauMH0Dm6CLrvr9cGfB6mLm6YlLt9QQf/view?usp=sharing). The storage for the datasets is 3.3GB.
+If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-3600-backup`](https://drive.google.com/file/d/1rTuCinLNDnB9q8lyPyZgIaXxpHscX5my/view?usp=drive_link). The storage for the datasets is 3.3GB.
 
 
 ## How to run a small demo?
@@ -114,9 +110,8 @@ To run the demo, everything else could be kept the same except the parameter of 
    bash find_vital_GS.sh 100 8
    ```
 
-5. **(Make the timeslots and the number of logical processors smaller, such as 100 and 8)** Time-Slot Analysis (as shown in Section 5.1. You should specify the number of timeslots, the number of available logical processors for multi-thread, and throughput degradation, e.g. 100 8 0.9). Throughput degradation could be like 1, 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to analyze the deployment for various degradations: (ten to thirty minutes taken with our hardware)
+5. **(Make the timeslots and the number of logical processors smaller, such as 100 and 8)** Time-Slot Analysis (as shown in Section 5.1. You should specify the number of timeslots, the number of available logical processors for multi-thread, and throughput degradation, e.g. 100 8 0.9). Throughput degradation could be like 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to analyze the deployment for various degradations:
    ```
-   bash time_slot_analysis.sh 100 8 1
    bash time_slot_analysis.sh 100 8 0.9
    bash time_slot_analysis.sh 100 8 0.8
    bash time_slot_analysis.sh 100 8 0.7
@@ -124,9 +119,8 @@ To run the demo, everything else could be kept the same except the parameter of 
    bash time_slot_analysis.sh 100 8 0.5
    ```
 
-6. **(Make the timeslots smaller, such as 100)** Aggregated_deployment (as shown in Section 5.2. You should specify the number of timeslots and throughput degradation, e.g. 100 0.9). Throughput degradation could be like 1, 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to Aggregate the deployment for various degradations: (one minute taken with our hardware)
+6. **(Make the timeslots smaller, such as 100)** Aggregated_deployment (as shown in Section 5.2. You should specify the number of timeslots and throughput degradation, e.g. 100 0.9). Throughput degradation could be like 0.9, 0.8, 0.7, 0.6, 0.5 as shown in Section 6. Thus, run the following commands sequentially to Aggregate the deployment for various degradations:
    ```
-   bash aggregated_deployment.sh 100 1
    bash aggregated_deployment.sh 100 0.9
    bash aggregated_deployment.sh 100 0.8
    bash aggregated_deployment.sh 100 0.7
@@ -139,18 +133,19 @@ To run the demo, everything else could be kept the same except the parameter of 
    bash get_results.sh
    ```
 
-If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-100-backup`](https://drive.google.com/file/d/1py1jELENHA4I_RcOwxnMk4lYSNEdhu92/view?usp=sharing). The storage for the dataset is 95MB.
+If running such a reproduction is a burden, all the reproduced data is already available in [`starlink_shell_one-100-backup`](https://drive.google.com/file/d/1eNZg-OF8xsjjjJNGbJ_8kE_j0x-MtSFR/view?usp=drive_link). The storage for the dataset is 104MB.
 
 ## Results
 Running the above seven steps allows you to get the reproduced results and figures in `starlink_shell_one/results`. 
 
 ### Better Performance of SKYFALL’ Distributed Botnet
-SKYFALL is able to exploit the time-varying bottleneck and achieve good flooding attack performances. We compare it with a baseline, where both are given the same number of bot terminals. We then compare the throughput (ratio) of affected background traffic and number of affected GSLs over time. The results are shown in Figure 9. Under `starlink_shell_one/results/`, `fig-9a`, `fig-9b`, and `fig-9c` contain the corresponding throughput (ratio) data for each timeslot. `fig-10a` contains the number of attacked GSLs for each timeslot, while `fig-10b` documents the maximum, minimum, and average numbers.
+SKYFALL is able to exploit the time-varying bottleneck and achieve good flooding attack performances. We compare it with a baseline, where both are given the same number of bot terminals. We then compare the throughput (ratio) of affected background traffic and number of affected GSLs over time. The results are shown in Figure 10. Under `starlink_shell_one/results/`, `fig-10a`, `fig-10b`, and `fig-10c` contain the corresponding throughput (ratio) data for each timeslot. `fig-11a` contains the CDF of the number of congested GSLs, while `fig-11b` documents the box-plot.
 
-### Cost Analysis
-To achieve the same throughput degradation as the baseline approach, SKYFALL is able to leverage a smaller number of malicious terminals (botnet size) for both +Grid and Circular topologies. The results are shown in Figure 12. `fig-12a`, and `fig-12b` under `starlink_shell_one/results/` contain the number of malicious terminals under various degradations for both topologies respectively.
+### Variability Analysis
+The analysis results depend primarily on factors, such as the number and regions of available compromised UTs, which determines the malicious traffic volume. The results are shown in Figure 12 and Figure 13. `fig-12a`, and `fig-12b` under `starlink_shell_one/results/` contain the hroughput degradation with varying numbers of compromised UTs. `fig-13a`, and `fig-13b` under `starlink_shell_one/results/` contain the throughput degradation with varying numbers of
+regional blocks.
 
-### Detectability Analysis
+### Stealthiness Analysis
 During SKYFALL's attack, the total malicious traffic of each satellite from all accessed malicious terminals is small. It quantifies the detectability of SKYFALL. The results are shown in Figure 14. Only a small number of satellites are accessed with malicious traffic. Under `starlink_shell_one/results/`, `fig-14a`,and `fig-14b` contain the throughput data of maliciousc traffic for each satellite in ascending order under various throughput
 degradations.
 

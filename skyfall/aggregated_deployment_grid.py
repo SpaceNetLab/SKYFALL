@@ -78,55 +78,56 @@ if __name__ == "__main__":
         target_sat = user_connect_sat[max_block]
         for i in range(len(user_connect_sat)):
             if user_connect_sat[i] == target_sat:
-                total_bot += int(average_block[i] * 1.62)
+                total_bot += average_block[i]
                 average_block[i] = 0
 
         bot_total_num += math.ceil(total_bot)
         bot_block.append(max_block)
         bot_block_bot_num_per_block.append(math.ceil(total_bot))
 
-    # replace the blocks with a few malicious terminals to neaby blocks
+    bot_block = np.array(bot_block, dtype=int)
+    np.savetxt('../' + cons_name + '/+grid_data/attack_traffic_data_land_only_bot/' + str(ratio) + "-" +
+               str(traffic_thre) + "-" + str(sat_per_cycle) + "-" +
+               str(GSL_capacity) + "-" + str(unit_traffic) + '/bot_block.txt',
+               bot_block,
+               fmt='%d')
+    bot_block_bot_num_per_block = np.array(
+        bot_block_bot_num_per_block, dtype=int)
+    np.savetxt('../' + cons_name + '/+grid_data/attack_traffic_data_land_only_bot/' + str(ratio) + "-" +
+               str(traffic_thre) + "-" + str(sat_per_cycle) + "-" +
+               str(GSL_capacity) + "-" + str(unit_traffic) +
+               '/bot_block_bot_num_per_block.txt',
+               bot_block_bot_num_per_block,
+               fmt='%d')
+    bot_num = np.array([bot_total_num], dtype=int)
+    np.savetxt('../' + cons_name + '/+grid_data/attack_traffic_data_land_only_bot/' + str(ratio) + "-" +
+               str(traffic_thre) + "-" + str(sat_per_cycle) + "-" +
+               str(GSL_capacity) + "-" + str(unit_traffic) + '/bot_num.txt',
+               bot_num,
+               fmt='%d')
+
     bot_block_trim = []
     bot_block_bot_num_per_block_trim = []
     bot_block_trim_pos = []
     for block_index in range(len(bot_block_bot_num_per_block)):  
-        if bot_block_bot_num_per_block[block_index] > 4:
+        if bot_block_bot_num_per_block[block_index] > 10:
             bot_block_trim.append(bot_block[block_index])
             bot_block_bot_num_per_block_trim.append(
                 bot_block_bot_num_per_block[block_index])
             lat, lon = block_to_xy(bot_block[block_index])
             bot_block_trim_pos.append(cir_to_car_np(lat, lon))
 
+    # replace the blocks with a few malicious terminals to neaby blocks
     for block_index in range(len(bot_block_bot_num_per_block)):
-        if bot_block_bot_num_per_block[block_index] == 1:
-            lat, lon = block_to_xy(bot_block[block_index])
-            dis = np.sqrt(
-                np.sum(np.square(bot_block_trim_pos - cir_to_car_np(lat, lon)),
-                       axis=1))  
-            target_block_index = np.argmin(dis)
-            bot_block_bot_num_per_block_trim[target_block_index] += 1
-        if bot_block_bot_num_per_block[block_index] == 2:
-            lat, lon = block_to_xy(bot_block[block_index])
-            dis = np.sqrt(
-                np.sum(np.square(bot_block_trim_pos - cir_to_car_np(lat, lon)),
-                       axis=1))  
-            target_block_index = np.argmin(dis)
-            bot_block_bot_num_per_block_trim[target_block_index] += 2
-        if bot_block_bot_num_per_block[block_index] == 3:
-            lat, lon = block_to_xy(bot_block[block_index])
-            dis = np.sqrt(
-                np.sum(np.square(bot_block_trim_pos - cir_to_car_np(lat, lon)),
-                       axis=1))  
-            target_block_index = np.argmin(dis)
-            bot_block_bot_num_per_block_trim[target_block_index] += 3
-        if bot_block_bot_num_per_block[block_index] == 4:
-            lat, lon = block_to_xy(bot_block[block_index])
-            dis = np.sqrt(
-                np.sum(np.square(bot_block_trim_pos - cir_to_car_np(lat, lon)),
-                       axis=1))  
-            target_block_index = np.argmin(dis)
-            bot_block_bot_num_per_block_trim[target_block_index] += 4
-
+        for small_bot_num in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+            if bot_block_bot_num_per_block[block_index] == small_bot_num:
+                lat, lon = block_to_xy(bot_block[block_index])
+                dis = np.sqrt(
+                    np.sum(np.square(bot_block_trim_pos - cir_to_car_np(lat, lon)),
+                        axis=1))  
+                target_block_index = np.argmin(dis)
+                bot_block_bot_num_per_block_trim[target_block_index] += small_bot_num
+                
     # replace the blocks with too many malicious terminals to neaby blocks
     loop_times = 0
     while True:
@@ -156,6 +157,7 @@ if __name__ == "__main__":
                 bot_block_trim.append(bot_block_trim[index + additional_block_num] + 1)
             bot_block_bot_num_per_block_trim.append(bot_num % 20)
             bot_block_trim.append(bot_block_trim[index] - 1)
+                
 
     bot_block_trim = np.array(bot_block_trim, dtype=int)
     np.savetxt('../' + cons_name + '/+grid_data/attack_traffic_data_land_only_bot/' + str(ratio) + "-" +
@@ -171,11 +173,11 @@ if __name__ == "__main__":
                '/bot_block_bot_num_per_block_trim.txt',
                bot_block_bot_num_per_block_trim,
                fmt='%d')
-    bot_num = np.array([bot_total_num], dtype=int)
+    bot_num_trim = np.array([bot_total_num], dtype=int)
     np.savetxt('../' + cons_name + '/+grid_data/attack_traffic_data_land_only_bot/' + str(ratio) + "-" +
                str(traffic_thre) + "-" + str(sat_per_cycle) + "-" +
-               str(GSL_capacity) + "-" + str(unit_traffic) + '/bot_num.txt',
-               bot_num,
+               str(GSL_capacity) + "-" + str(unit_traffic) + '/bot_num_trim.txt',
+               bot_num_trim,
                fmt='%d')
     print("bFinished aggregating for +Grid!")
     

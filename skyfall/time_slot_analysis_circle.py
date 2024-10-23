@@ -91,7 +91,7 @@ if __name__ == "__main__":
         if sat_connect_gs[max_index] in vital_gs:  # accessible downlink GSLs
             total_target_traffic += max_data
             target_gs = sat_connect_gs[max_index]
-            start_sat, end_sat = find_cycle(max_index)  #找到该卫星所在环的所有卫星的索引最小、最大值
+            start_sat, end_sat = find_cycle(max_index)  
 
             # calculating number of needed malicious terminals
             needed_bot_traffic = GSL_capacity / ratio - max_data
